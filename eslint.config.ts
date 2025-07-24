@@ -1,13 +1,9 @@
-import { globalIgnores } from 'eslint/config'
-import { defineConfigWithVueTs, vueTsConfigs } from '@vue/eslint-config-typescript'
-import pluginVue from 'eslint-plugin-vue'
 import pluginVitest from '@vitest/eslint-plugin'
 import skipFormatting from '@vue/eslint-config-prettier/skip-formatting'
-
-// To allow more languages other than `ts` in `.vue` files, uncomment the following lines:
-// import { configureVueProject } from '@vue/eslint-config-typescript'
-// configureVueProject({ scriptLangs: ['ts', 'tsx'] })
-// More info at https://github.com/vuejs/eslint-config-typescript/#advanced-setup
+import { defineConfigWithVueTs, vueTsConfigs } from '@vue/eslint-config-typescript'
+import { globalIgnores } from 'eslint/config'
+import importPlugin from 'eslint-plugin-import'
+import pluginVue from 'eslint-plugin-vue'
 
 export default defineConfigWithVueTs(
   {
@@ -19,10 +15,31 @@ export default defineConfigWithVueTs(
 
   pluginVue.configs['flat/essential'],
   vueTsConfigs.recommended,
-  
+
   {
     ...pluginVitest.configs.recommended,
     files: ['src/**/__tests__/*'],
+  },
+
+  {
+    plugins: {
+      import: importPlugin,
+    },
+    rules: {
+      'import/newline-after-import': ['error', { count: 1 }],
+      'import/order': [
+        'error',
+        {
+          groups: ['external', 'builtin', 'internal', 'sibling', 'parent', 'index'],
+          pathGroups: [{ pattern: '@/**', group: 'sibling' }],
+          'newlines-between': 'always',
+          alphabetize: {
+            order: 'asc',
+            caseInsensitive: true,
+          },
+        },
+      ],
+    },
   },
   skipFormatting,
 )

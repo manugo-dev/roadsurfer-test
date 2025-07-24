@@ -1,12 +1,12 @@
-import { fileURLToPath } from 'node:url'
 import { mergeConfig, defineConfig, configDefaults } from 'vitest/config'
+
+import { fileURLToPath } from 'node:url'
+
 import viteConfig from './vite.config'
-import tailwindcss from '@tailwindcss/vite'
 
 export default mergeConfig(
   viteConfig,
   defineConfig({
-    plugins: [tailwindcss()],
     test: {
       environment: 'jsdom',
       exclude: [...configDefaults.exclude, 'e2e/**'],
