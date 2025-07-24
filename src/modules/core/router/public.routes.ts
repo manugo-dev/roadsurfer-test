@@ -6,7 +6,7 @@ export const publicRoutes: RouteRecordRaw[] = [
   {
     path: APP_ROUTES.HOME.path,
     name: APP_ROUTES.HOME.name,
-    redirect: { name: APP_ROUTES.DASHBOARD.name },
+    component: () => import("@/modules/core/views/HomeView.vue"),
   },
   {
     path: APP_ROUTES.NOT_FOUND.path,
