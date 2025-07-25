@@ -30,11 +30,10 @@ jobs:
       - name: 🏗️ Build
         run: npm run build
 
-      - name: Upload static files as artifact
-        id: deployment
+      - name: 📦 Upload build artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: build/
+          path: ./dist
 
   deploy:
     runs-on: ubuntu-latest
