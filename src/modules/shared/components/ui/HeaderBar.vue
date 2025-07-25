@@ -6,6 +6,8 @@ import { APP_ROUTES } from "@/modules/core/constants/routes"
 
 <template>
   <header class="bg-primary px-8 py-4 text-white">
-    <RouterLink :to="{ name: APP_ROUTES.HOME.name }">roadsurfer - coding task</RouterLink>
+    <RouterLink :to="{ name: APP_ROUTES.HOME.name }">
+      <span>roadsurfer - coding task</span>
+    </RouterLink>
   </header>
 </template>
