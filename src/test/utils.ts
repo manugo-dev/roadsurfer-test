@@ -1,32 +1,32 @@
-import { QueryClient, VueQueryPlugin } from "@tanstack/vue-query"
-import { mount, VueWrapper } from "@vue/test-utils"
-import { createPinia, type Pinia } from "pinia"
-import type { Component } from "vue"
-import { createRouter, createWebHistory, type Router } from "vue-router"
+import { QueryClient, VueQueryPlugin } from "@tanstack/vue-query";
+import { mount, VueWrapper } from "@vue/test-utils";
+import { createPinia, type Pinia } from "pinia";
+import type { Component } from "vue";
+import { createRouter, createWebHistory, type Router } from "vue-router";
 
-import { APP_ROUTES } from "@/modules/core/constants/routes"
+import { APP_ROUTES } from "@/modules/core/constants/routes";
 
 /**
  * Create a test router with mock routes
  */
 export function createTestRouter(): Router {
   const routes = [
-    { path: "/", name: APP_ROUTES.HOME.name, component: { template: "<div>Home</div>" } },
+    { path: "/", component: { template: "<div>Home</div>" } },
     { path: "/not-found", name: APP_ROUTES.NOT_FOUND.name, component: { template: "<div>Not Found</div>" } },
     { path: "/dashboard", name: APP_ROUTES.DASHBOARD.name, component: { template: "<div>Dashboard</div>" } },
-  ]
+  ];
 
   return createRouter({
     history: createWebHistory(),
     routes,
-  })
+  });
 }
 
 /**
  * Create a test Pinia store
  */
 export function createTestPinia(): Pinia {
-  return createPinia()
+  return createPinia();
 }
 
 /**
@@ -43,7 +43,7 @@ export function createTestQueryClient(): QueryClient {
         retry: false,
       },
     },
-  })
+  });
 }
 
 /**
@@ -52,15 +52,15 @@ export function createTestQueryClient(): QueryClient {
 export function mountWithProviders(
   component: Component,
   options: {
-    props?: Record<string, unknown>
-    router?: Router
-    pinia?: Pinia
-    queryClient?: QueryClient
+    props?: Record<string, unknown>;
+    router?: Router;
+    pinia?: Pinia;
+    queryClient?: QueryClient;
     global?: {
-      plugins?: Array<unknown>
-      provide?: Record<string, unknown>
-      stubs?: Record<string, unknown>
-    }
+      plugins?: Array<unknown>;
+      provide?: Record<string, unknown>;
+      stubs?: Record<string, unknown>;
+    };
   } = {},
 ): VueWrapper {
   const {
@@ -69,9 +69,9 @@ export function mountWithProviders(
     pinia = createTestPinia(),
     queryClient = createTestQueryClient(),
     global = {},
-  } = options
+  } = options;
 
-  const plugins = [router, pinia, [VueQueryPlugin, { queryClient }], ...(global.plugins || [])]
+  const plugins = [router, pinia, [VueQueryPlugin, { queryClient }], ...(global.plugins || [])];
 
   return mount(component, {
     props,
@@ -88,7 +88,7 @@ export function mountWithProviders(
         ...global.stubs,
       },
     },
-  })
+  });
 }
 
 /**
@@ -101,14 +101,14 @@ export function createMockResponse<T>(data: T, status = 200) {
     statusText: "OK",
     headers: {},
     config: {},
-  }
+  };
 }
 
 /**
  * Helper to create a mock error response
  */
 export function createMockErrorResponse(message = "Network Error", status = 500) {
-  const error = new Error(message) as Error & { response?: { status: number; data?: unknown } }
-  error.response = { status, data: { message } }
-  return error
+  const error = new Error(message) as Error & { response?: { status: number; data?: unknown } };
+  error.response = { status, data: { message } };
+  return error;
 }

@@ -1,16 +1,11 @@
 import type { RouteRecordRaw } from "vue-router"
 
-import { APP_ROUTES } from "@/modules/core/constants/routes"
+import { dashboardRoutes } from "@/modules/dashboard/dashboard.routes"
 
 export const publicRoutes: RouteRecordRaw[] = [
   {
-    path: APP_ROUTES.HOME.path,
-    name: APP_ROUTES.HOME.name,
-    component: () => import("@/modules/core/views/HomeView.vue"),
-  },
-  {
-    path: APP_ROUTES.NOT_FOUND.path,
-    name: APP_ROUTES.NOT_FOUND.name,
-    component: () => import("@/modules/core/views/ErrorView.vue"),
+    path: "/",
+    component: () => import("@/modules/shared/layouts/BaseLayout.vue"),
+    children: [...dashboardRoutes],
   },
 ]

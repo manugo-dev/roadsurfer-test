@@ -1,8 +1,4 @@
 export const APP_ROUTES = {
-  HOME: {
-    path: "/",
-    name: "home",
-  },
   NOT_FOUND: {
     path: "/:pathMatch(.*)*",
     name: "not-found",
@@ -10,7 +6,7 @@ export const APP_ROUTES = {
 
   // Dashboard routes
   DASHBOARD: {
-    path: "/dashboard",
+    path: "/",
     name: "dashboard",
   },
 
