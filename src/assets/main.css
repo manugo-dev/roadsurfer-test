@@ -23,4 +23,5 @@ body {
     "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
   --color-primary: #6bbbae;
   --color-primary-light: #f0f8f7;
+  --color-primary-dark: #4a9f8c;
 }

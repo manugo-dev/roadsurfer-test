@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { onClickOutside } from "@vueuse/core";
-import { ref, computed, nextTick } from "vue";
+import { ref, computed, nextTick, useId } from "vue";
 
 import InputField, { type InputFieldProps } from "./InputField.vue";
 
@@ -28,6 +28,8 @@ const props = withDefaults(defineProps<AutocompleteFieldProps>(), {
 });
 
 const emit = defineEmits(["update:modelValue", "select", "blur", "focus", "update:input"]);
+
+const fieldId = props.id ?? useId();
 
 const query = ref("");
 const open = ref(false);
@@ -101,8 +103,14 @@ onClickOutside(wrapperRef, handleClickOutside);
 </script>
 
 <template>
-  <div class="relative w-full" ref="wrapperRef" @keydown="handleKeyDown" @blur="$emit('blur')">
+  <div
+    :id="`autocomplete-wrapper_${fieldId}`"
+    class="relative w-full"
+    ref="wrapperRef"
+    @keydown="handleKeyDown"
+    @blur="$emit('blur')">
     <InputField
+      :id="fieldId"
       ref="inputRef"
       v-model="query"
       :aria-expanded="open"
@@ -121,11 +129,13 @@ onClickOutside(wrapperRef, handleClickOutside);
     <ul
       v-if="open"
       ref="listRef"
-      id="autocomplete-listbox"
+      :id="`autocomplete-listbox_${fieldId}`"
       role="listbox"
       class="absolute z-10 mt-1 max-h-52 w-full overflow-auto rounded border border-zinc-300 bg-white shadow-md">
-      <li v-if="!filteredOptions.length" class="px-3 py-2 text-sm text-zinc-400 italic select-none">
-        {{ props.noOptionsFoundText }}
+      <li v-if="!filteredOptions.length" class="w-full px-3 py-2 text-sm text-zinc-400 italic select-none">
+        <slot name="options">
+          {{ props.noOptionsFoundText }}
+        </slot>
       </li>
       <li
         v-for="(option, idx) in filteredOptions"
@@ -133,7 +143,7 @@ onClickOutside(wrapperRef, handleClickOutside);
         :data-idx="idx"
         role="option"
         :aria-selected="highlighted === idx"
-        @click="select(option)"
+        @click="select(filteredOptions[idx])"
         class="hover:bg-primary cursor-pointer px-3 py-2 text-sm hover:text-white"
         :class="{ 'bg-primary text-white': highlighted === idx }">
         {{ props.getOptionLabel(option) }}

@@ -63,8 +63,8 @@ describe("RemoteAutocompleteField", () => {
     await options[0].trigger("click");
     const selectedOption = {
       label: MOCKED_REMOTE_OPTIONS[0].name,
-      original: MOCKED_REMOTE_OPTIONS[0],
       value: MOCKED_REMOTE_OPTIONS[0].id,
+      original: MOCKED_REMOTE_OPTIONS[0],
     };
     expect(wrapper.emitted("select")).toStrictEqual([[selectedOption]]);
     expect(wrapper.emitted("update:modelValue")).toStrictEqual([[selectedOption]]);

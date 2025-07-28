@@ -2,6 +2,7 @@
 import { computed, ref, useAttrs, useId, watch } from "vue";
 
 export interface InputFieldProps {
+  id?: string;
   label?: string;
   placeholder?: string;
   type?: "text" | "email" | "password" | "number" | "tel" | "url" | "search";
@@ -14,7 +15,7 @@ export interface InputFieldProps {
 
 const props = defineProps<InputFieldProps>();
 const attrs = useAttrs();
-const inputId = useId();
+const fieldId = props.id ?? useId();
 const modelValue = defineModel<string>({ default: "", type: String });
 
 const hasError = computed(() => !!props.errorMessage);
@@ -34,18 +35,19 @@ function clearInput() {
 </script>
 
 <template>
-  <div class="relative flex flex-col" :id="`input-container-${inputId}`">
+  <div :id="`input-group_${fieldId}`" class="relative flex flex-col">
     <label
+      :id="`input-label_${fieldId}`"
       v-if="props.label"
-      :for="inputId"
+      :for="fieldId"
       class="text-sm font-medium text-zinc-500 uppercase"
       :class="{ 'font-bold text-red-500': hasError }">
       {{ props.label }}
       <span v-if="props.required" aria-label="required field" class="text-red-500">*</span>
     </label>
-    <div class="relative">
+    <div :id="`input-container_${fieldId}`" class="relative">
       <input
-        :id="inputId"
+        :id="fieldId"
         ref="inputRef"
         v-model="modelValue"
         :type="props.type || 'text'"
@@ -53,7 +55,7 @@ function clearInput() {
         :aria-required="props.required"
         :aria-invalid="hasError"
         :aria-describedby="
-          [props.helperText ? `${inputId}-help` : '', props.errorMessage ? `${inputId}-error` : '']
+          [props.helperText ? `${fieldId}-help` : '', props.errorMessage ? `${fieldId}-error` : '']
             .filter(Boolean)
             .join(' ')
         "
@@ -69,7 +71,7 @@ function clearInput() {
         @click="clearInput"
         aria-label="Clear input"
         class="focus:ring-primary absolute top-1/2 right-2 flex -translate-y-1/2 cursor-pointer items-center justify-center text-2xl text-zinc-400 hover:text-zinc-600 focus:ring-1 focus:outline-none">
-        <span class="sr-only">Close menu</span>
+        <span class="sr-only">Clear input</span>
         <svg
           class="h-4 w-4"
           xmlns="http://www.w3.org/2000/svg"
@@ -82,12 +84,12 @@ function clearInput() {
       </button>
     </div>
 
-    <span v-if="props.helperText" :id="`${inputId}-help`" class="mt-1 text-xs text-zinc-500">
+    <span v-if="props.helperText" :id="`${fieldId}-help`" class="mt-1 text-xs text-zinc-500">
       {{ props.helperText }}
     </span>
     <span
       v-if="props.errorMessage"
-      :id="`${inputId}-error`"
+      :id="`${fieldId}-error`"
       class="mt-1 text-xs text-red-500"
       role="alert"
       aria-live="polite">
