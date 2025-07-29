@@ -14,4 +14,4 @@ export const APP_ROUTES = {
     path: "/stations/:stationId/bookings/:bookingId",
     name: "stations-booking-detail",
   },
-}
+};

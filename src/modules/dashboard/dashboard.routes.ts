@@ -1,6 +1,6 @@
-import type { RouteRecordRaw } from "vue-router"
+import type { RouteRecordRaw } from "vue-router";
 
-import { APP_ROUTES } from "../core/constants/routes"
+import { APP_ROUTES } from "@/modules/core/constants/routes";
 
 export const dashboardRoutes: RouteRecordRaw[] = [
   {
@@ -8,4 +8,4 @@ export const dashboardRoutes: RouteRecordRaw[] = [
     name: APP_ROUTES.DASHBOARD.name,
     component: () => import("@/modules/dashboard/views/DashboardView.vue"),
   },
-]
+];

@@ -40,7 +40,7 @@ function clearInput() {
       :id="`input-label_${fieldId}`"
       v-if="props.label"
       :for="fieldId"
-      class="text-sm font-medium text-zinc-500 uppercase"
+      class="text-sm font-medium text-zinc-400 uppercase"
       :class="{ 'font-bold text-red-500': hasError }">
       {{ props.label }}
       <span v-if="props.required" aria-label="required field" class="text-red-500">*</span>
@@ -62,7 +62,7 @@ function clearInput() {
         :disabled="props.disabled"
         :required="props.required"
         v-bind="attrs"
-        class="focus:ring-primary focus:border-primary w-full rounded-sm border border-zinc-300 p-2 pr-10 text-base text-zinc-600 transition-colors duration-200 outline-none placeholder:text-zinc-400 focus:ring-2"
+        class="focus:ring-primary focus:border-primary w-full rounded-sm border-2 border-zinc-300 p-2 pr-10 text-base text-zinc-600 transition-colors duration-200 outline-none placeholder:text-zinc-400 focus:ring-2"
         :class="{ 'border-red-500': hasError, 'cursor-not-allowed border-zinc-900': props.disabled }" />
 
       <button

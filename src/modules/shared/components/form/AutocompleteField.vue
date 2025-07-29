@@ -7,6 +7,7 @@ import InputField, { type InputFieldProps } from "./InputField.vue";
 export interface AutocompleteOption {
   label: string;
   value: string;
+  description?: string;
 }
 
 export interface AutocompleteFieldProps<T = AutocompleteOption> extends Omit<InputFieldProps, "modelValue" | "type"> {
@@ -131,7 +132,7 @@ onClickOutside(wrapperRef, handleClickOutside);
       ref="listRef"
       :id="`autocomplete-listbox_${fieldId}`"
       role="listbox"
-      class="absolute z-10 mt-1 max-h-52 w-full overflow-auto rounded border border-zinc-300 bg-white shadow-md">
+      class="absolute z-50 mt-1 max-h-52 w-full overflow-auto rounded border border-zinc-300 bg-white shadow-md">
       <li v-if="!filteredOptions.length" class="w-full px-3 py-2 text-sm text-zinc-400 italic select-none">
         <slot name="options">
           {{ props.noOptionsFoundText }}
@@ -144,9 +145,10 @@ onClickOutside(wrapperRef, handleClickOutside);
         role="option"
         :aria-selected="highlighted === idx"
         @click="select(filteredOptions[idx])"
-        class="hover:bg-primary cursor-pointer px-3 py-2 text-sm hover:text-white"
+        class="hover:bg-primary flex cursor-pointer flex-col px-3 py-2 text-sm hover:text-white"
         :class="{ 'bg-primary text-white': highlighted === idx }">
-        {{ props.getOptionLabel(option) }}
+        <span class="font-bold">{{ props.getOptionLabel(option) }}</span>
+        <span v-if="option.description" class="text-xs">{{ option.description }}</span>
       </li>
     </ul>
   </div>

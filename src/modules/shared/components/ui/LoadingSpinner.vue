@@ -15,7 +15,7 @@ const props = withDefaults(defineProps<LoadingSpinnerProps>(), {
       'my-4 h-10 w-10': props.size === 'md',
       'my-4 h-16 w-16': props.size === 'lg',
     }"
-    class="border-t-primary m-auto animate-spin rounded-[50%] border-4 border-solid border-gray-200"
+    class="border-t-primary m-auto animate-spin rounded-[50%] border-4 border-solid border-zinc-200"
     role="status">
     <span class="sr-only">Loading</span>
   </div>
