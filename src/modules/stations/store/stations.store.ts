@@ -1,19 +1,25 @@
 import { defineStore } from "pinia";
-import { ref } from "vue";
+import { computed, ref } from "vue";
 
-import type { StationBooking } from "../stations.types";
+import type { Station, StationBooking } from "../stations.types";
+import { transformStationBookingsToCalendarEvents } from "../utils/transformers";
 
 export const useStationsStore = defineStore("stations", () => {
-  const currentStation = ref<string>();
+  const currentStation = ref<Station>();
   const stationBookings = ref<StationBooking[]>([]);
 
-  const setCurrentStation = (station: string) => {
+  const setCurrentStation = (station?: Station) => {
     currentStation.value = station;
+    stationBookings.value = station?.bookings || [];
   };
 
   const setStationBookings = (bookings: StationBooking[]) => {
     stationBookings.value = bookings;
   };
 
-  return { currentStation, setCurrentStation, stationBookings, setStationBookings };
+  const currentStationEvents = computed(() => {
+    return transformStationBookingsToCalendarEvents(stationBookings.value);
+  });
+
+  return { currentStation, setCurrentStation, stationBookings, setStationBookings, currentStationEvents };
 });

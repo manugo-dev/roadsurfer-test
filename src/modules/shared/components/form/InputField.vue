@@ -22,7 +22,7 @@ const hasError = computed(() => !!props.errorMessage);
 const showClear = computed(() => props.clearable && modelValue.value.length > 0 && !props.disabled);
 const inputRef = ref<HTMLInputElement>();
 
-const emit = defineEmits(["input"]);
+const emit = defineEmits(["input", "clear"]);
 
 watch(modelValue, (inputValue) => {
   emit("input", inputValue);
@@ -31,6 +31,7 @@ watch(modelValue, (inputValue) => {
 function clearInput() {
   modelValue.value = "";
   inputRef.value?.focus();
+  emit("clear");
 }
 </script>
 

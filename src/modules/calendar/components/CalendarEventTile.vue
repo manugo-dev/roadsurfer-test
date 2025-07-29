@@ -12,12 +12,16 @@ const props = withDefaults(defineProps<CalendarEvent>(), {});
     class="flex w-full cursor-pointer flex-col rounded-sm bg-zinc-50 px-4 py-2"
     @click="$emit('event-click', id)">
     <div class="text-md flex flex-col">
-      <span class="truncate font-medium text-zinc-900">
+      <span id="eventLabel" class="truncate font-medium text-zinc-900">
         {{ label }}
       </span>
-      <span class="truncate text-sm text-zinc-600">{{ formatDate(props.startDate, DEFAULT_DATE_TIME_FORMAT) }}</span>
-      <span class="truncate text-sm text-zinc-600">{{ formatDate(props.endDate, DEFAULT_DATE_TIME_FORMAT) }}</span>
-      <span class="truncate text-xs text-zinc-600">ID: {{ id }}</span>
+      <span id="startDate" class="truncate text-sm text-zinc-600">
+        {{ formatDate(props.startDate, DEFAULT_DATE_TIME_FORMAT) }}
+      </span>
+      <span id="endDate" class="truncate text-sm text-zinc-600">
+        {{ formatDate(props.endDate, DEFAULT_DATE_TIME_FORMAT) }}
+      </span>
+      <span id="eventId" class="truncate text-xs text-zinc-600">ID: {{ id }}</span>
     </div>
   </div>
 </template>

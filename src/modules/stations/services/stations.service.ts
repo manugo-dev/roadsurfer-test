@@ -9,7 +9,7 @@ export const stationsApi = createHttpClient({
 
 export const getStations = async (name?: string): Promise<Station[]> => {
   const response = await stationsApi.get<Station[]>("/stations", {
-    params: { name },
+    params: { ...(name ? { name } : {}) },
   });
   return response.data;
 };

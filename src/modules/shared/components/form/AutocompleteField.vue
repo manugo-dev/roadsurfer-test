@@ -28,7 +28,7 @@ const props = withDefaults(defineProps<AutocompleteFieldProps>(), {
   filterOptions: true,
 });
 
-const emit = defineEmits(["update:modelValue", "select", "blur", "focus", "update:input"]);
+const emit = defineEmits(["update:modelValue", "select", "blur", "focus", "update:input", "clear"]);
 
 const fieldId = props.id ?? useId();
 
@@ -126,7 +126,8 @@ onClickOutside(wrapperRef, handleClickOutside);
       :error-message="props.errorMessage"
       :helper-text="props.helperText"
       @focus="handleFocus"
-      @input="$emit('update:input', query)" />
+      @input="$emit('update:input', query)"
+      @clear="$emit('clear')" />
     <ul
       v-if="open"
       ref="listRef"

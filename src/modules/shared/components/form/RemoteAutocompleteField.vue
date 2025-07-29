@@ -25,12 +25,16 @@ export interface RemoteAutocompleteFieldProps<T>
   filterOptions?: boolean;
   errorMessage?: string;
   helperText?: string;
+  fetchOnLoad?: boolean;
+  fetchQueryKey?: string;
 }
 
 const props = withDefaults(defineProps<RemoteAutocompleteFieldProps<T>>(), {
   clearOnBlur: true,
   filterOptions: false,
   noOptionsFoundText: "No options found",
+  fetchOnLoad: true,
+  fetchQueryKey: "remote-autocomplete",
 });
 const fieldId = props.id ?? useId();
 
@@ -39,28 +43,35 @@ const emit = defineEmits<{
   select: [option: ExtendedAutocompleteOption<T>];
   blur: [];
   focus: [];
+  clear: [];
   "update:input": [value: string];
+  "update:data": [options: T[]];
+  "update:options": [options: ExtendedAutocompleteOption<T>[]];
 }>();
 
 const inputQuery = ref<string>("");
 const inputQueryDebounced = refDebounced(inputQuery, 500);
-const enabled = ref<boolean>(true);
+const enabled = ref<boolean>(props.fetchOnLoad);
 
 const queryKey = computed<readonly string[]>(() => [
-  "remote-autocomplete",
-  ...(props.filterOptions ? [] : [inputQueryDebounced.value]),
+  props.fetchQueryKey,
+  ...(props.filterOptions || !inputQueryDebounced.value ? [] : [inputQueryDebounced.value]),
 ]);
 
 const query = useQuery({
   queryKey,
   queryFn: (): Promise<T[]> => props.fetchOptions(inputQueryDebounced.value),
-  select: (data: T[]): ExtendedAutocompleteOption<T>[] =>
-    data.map(
+  select: (data: T[]): ExtendedAutocompleteOption<T>[] => {
+    const formattedOptions = data.map(
       (item): ExtendedAutocompleteOption<T> => ({
         ...props.transformOption(item),
         original: item,
       }),
-    ),
+    );
+    emit("update:data", data);
+    emit("update:options", formattedOptions);
+    return formattedOptions;
+  },
   enabled,
   staleTime: 60_000,
   retry: 1,
@@ -94,6 +105,7 @@ function handleInputUpdate(value: string): void {
     @select="handleSelect"
     @blur="$emit('blur')"
     @focus="$emit('focus')"
+    @clear="$emit('clear')"
     @update:input="handleInputUpdate">
     <template v-slot:options>
       <div v-if="query.isLoading.value">
