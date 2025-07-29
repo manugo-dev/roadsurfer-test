@@ -1,7 +1,5 @@
 import type { CalendarEvent } from "./calendar.types";
 
-import { parseDate } from "../shared/utils/date";
-
 export const MOCKED_CALENDAR_EVENT: CalendarEvent = {
   id: "evt-123",
   label: "Test Event",
