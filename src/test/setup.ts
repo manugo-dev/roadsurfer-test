@@ -1,4 +1,4 @@
-import { vi } from "vitest";
+import { beforeAll, vi } from "vitest";
 
 // Mock IntersectionObserver for components that might use it
 global.IntersectionObserver = vi.fn().mockImplementation(() => ({
@@ -38,3 +38,7 @@ global.scrollTo = vi.fn();
 
 // Mock fetch if not using a specific HTTP client everywhere
 global.fetch = vi.fn();
+
+beforeAll(() => {
+  vi.stubEnv("TZ", "UTC");
+});

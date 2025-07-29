@@ -13,8 +13,8 @@ describe("CalendarEventTile.vue", () => {
 
   it("renders formatted start and end dates", () => {
     const wrapper = mountWithProviders(CalendarEventTile, { props: { ...MOCKED_CALENDAR_EVENT } });
-    expect(wrapper.find("#startDate").text()).toBe("2024-06-01 12:00:00");
-    expect(wrapper.find("#endDate").text()).toBe("2024-06-01 14:00:00");
+    expect(wrapper.find("#startDate").text()).toBe("2024-06-01 10:00:00");
+    expect(wrapper.find("#endDate").text()).toBe("2024-06-01 12:00:00");
   });
 
   it("renders event id", () => {

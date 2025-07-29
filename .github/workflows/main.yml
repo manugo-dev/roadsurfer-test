@@ -16,9 +16,13 @@ concurrency:
   group: "pages"
   cancel-in-progress: false
 
+env:
+  VITE_STATIONS_API_BASE_URL: ${{ vars.VITE_STATIONS_API_BASE_URL }}
+          
 jobs:
   build:
     runs-on: ubuntu-latest
+    environment: production
 
     steps:
       - name: 🛎️ Checkout code
@@ -38,10 +42,11 @@ jobs:
       - name: 🧪 Run unit tests and coverage
         run: npm run coverage
 
+      - name: 🐛 Print VITE vars
+        run: echo "${VITE_STATIONS_API_BASE_URL}"
+          
       - name: 🏗️ Build
         run: npm run build
-        env:
-          VITE_STATIONS_API_BASE_URL: ${{ env.VITE_STATIONS_API_BASE_URL }}
 
       - name: 📦 Upload dist as artifact
         uses: actions/upload-pages-artifact@v3

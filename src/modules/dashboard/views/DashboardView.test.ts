@@ -1,7 +1,9 @@
 import { flushPromises } from "@vue/test-utils";
-import { describe, it, expect, vi, type Mock } from "vitest";
+import { describe, it, expect, vi, type Mock, beforeAll } from "vitest";
 
 import DashboardView from "./DashboardView.vue";
+import { getStations } from "@/modules/stations/services/stations.service";
+import { MOCKED_GET_STATIONS_RESPONSE } from "@/modules/stations/stations.mocks";
 import { useStationsStore } from "@/modules/stations/store/stations.store";
 import { mountWithProviders } from "@/test/utils";
 
@@ -14,8 +16,13 @@ vi.mock("vue-router", async (importOriginal) => {
   };
 });
 vi.mock("@/modules/stations/store/stations.store");
+vi.mock("@/modules/stations/services/stations.service");
 
 describe("DashboardView", () => {
+  beforeAll(() => {
+    (getStations as Mock).mockResolvedValue(MOCKED_GET_STATIONS_RESPONSE);
+  });
+
   it("shows empty state when no station is selected", async () => {
     const mockStore = {
       currentStation: null,
