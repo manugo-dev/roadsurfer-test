@@ -41,7 +41,7 @@ jobs:
       - name: 🏗️ Build
         run: npm run build
         env:
-          VITE_BOOKING_API_BASE_URL: ${{ vars.VITE_BOOKING_API_BASE_URL }}
+          VITE_BOOKING_API_BASE_URL: ${{ env.VITE_BOOKING_API_BASE_URL }}
 
       - name: 📦 Upload dist as artifact
         uses: actions/upload-pages-artifact@v3
