@@ -3,7 +3,7 @@ import { createHttpClient } from "@/modules/core/services/http";
 import type { Station, StationBooking } from "../stations.types";
 
 export const stationsApi = createHttpClient({
-  baseURL: import.meta.env.VITE_BOOKING_API_BASE_URL,
+  baseURL: import.meta.env.VITE_STATIONS_API_BASE_URL,
   timeout: 10000,
 });
 
