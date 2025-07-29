@@ -11,6 +11,7 @@ const stationsStore = useStationsStore();
 
 function onOptionSelected(option: ExtendedAutocompleteOption<Station>) {
   stationsStore.setCurrentStation(option.value);
+  stationsStore.setStationBookings(option.original.bookings);
 }
 
 function transformStationToOption(station: Station): AutocompleteOption {
@@ -27,8 +28,8 @@ function transformStationToOption(station: Station): AutocompleteOption {
     id="station-finder-input"
     :fetch-options="getStations"
     :transform-option="transformStationToOption"
-    label="Estación"
-    placeholder="Buscar una estación"
-    no-options-found-text="No se encontraron estaciones"
+    label="Station Finder"
+    placeholder="Search for a station"
+    no-options-found-text="No stations found"
     @select="onOptionSelected" />
 </template>

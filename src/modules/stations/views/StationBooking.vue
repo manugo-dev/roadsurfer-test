@@ -10,15 +10,13 @@ import { getStationsBookingDetail } from "@/modules/stations/services/stations.s
 
 const route = useRoute();
 const router = useRouter();
-
-const stationId = computed(() => route.params.stationId);
-const bookingId = computed(() => route.params.bookingId);
+const stationId = computed<string>(() => route.params.stationId as string);
+const bookingId = computed<string>(() => route.params.bookingId as string);
 const isEnabled = computed(() => !!stationId.value && !!bookingId.value);
-const queryKey = computed(() => ["stations-booking-detail", stationId.value, bookingId.value]);
 
 const query = useQuery({
-  queryKey,
-  queryFn: () => getStationsBookingDetail(stationId.value!, bookingId.value!),
+  queryKey: computed(() => ["stations-booking-detail", stationId.value, bookingId.value]),
+  queryFn: () => getStationsBookingDetail(stationId.value, bookingId.value),
   enabled: isEnabled,
   staleTime: 60_000,
   retry: 1,
@@ -29,10 +27,10 @@ const query = useQuery({
   <h1 class="mb-4 text-lg font-semibold">Station Booking (#{{ bookingId }})</h1>
 
   <LoadingSpinner size="lg" v-if="query.isLoading.value" />
-  <div class="rounded-sm border-4 border-red-200 p-5 text-red-500" v-else-if="query.isError.value">
+  <div class="rounded-sm border-4 border-red-200 p-5 text-red-500" v-else-if="query.isError.value || !query.data.value">
     Cannot get booking details
   </div>
-  <div v-else>
+  <div class="rounded-lg bg-white p-6" v-else>
     <p>
       <strong>Customer:</strong>
       {{ query.data.value.customerName }}

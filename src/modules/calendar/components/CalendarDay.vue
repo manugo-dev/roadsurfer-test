@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import { formatDate } from "@vueuse/core";
-import { computed } from "vue";
 
 import CalendarEventTile from "./CalendarEventTile.vue";
 import type { CalendarEvent } from "@/modules/calendar/calendar.types";
@@ -19,30 +18,20 @@ const emit = defineEmits<{
   (e: "event-moved", payload: CalendarEvent, newStartDate: string, newEndDate: string): void;
   (e: "event-click", eventId: string): void;
 }>();
-
-const dayName = computed(() => {
-  return formatDate(props.day, "ddd");
-});
-const dayNumber = computed(() => {
-  return formatDate(props.day, "DD/MM/YYYY");
-});
-const dayIsToday = computed(() => {
-  return isToday(props.day);
-});
 </script>
 
 <template>
   <div
     :class="[
       'flex w-full flex-col flex-wrap gap-2 border-r border-zinc-200 last:border-0',
-      { 'bg-primary-light': dayIsToday },
+      { 'bg-primary-light': isToday(props.day) },
     ]">
     <div :class="['w-full border-b border-zinc-200 py-4 text-center']">
       <div class="text-xs font-medium text-zinc-500 uppercase">
-        {{ dayName }}
+        {{ formatDate(props.day, "ddd") }}
       </div>
       <div class="mx-auto text-lg font-semibold">
-        {{ dayNumber }}
+        {{ formatDate(props.day, "DD/MM/YYYY") }}
       </div>
     </div>
     <CalendarEventTile

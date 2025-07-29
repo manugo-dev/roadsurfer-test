@@ -5,7 +5,7 @@ import { DEFAULT_DATE_FORMAT } from "@/modules/core/constants/date";
 import { now, addDays, formatDate, getWeekDays, startOfWeek } from "@/modules/shared/utils/date";
 
 export const useCalendarStore = defineStore("calendar", () => {
-  const currentDate = ref(new Date("2021-03-13T22:04:19.032Z"));
+  const currentDate = ref(new Date());
   const viewType = ref("week");
 
   const currentWeek = computed(() => {
@@ -38,6 +38,11 @@ export const useCalendarStore = defineStore("calendar", () => {
     setCurrentDate(prevWeek);
   };
 
+  const goToDateWeek = (date: Date) => {
+    const weekStart = startOfWeek(date);
+    setCurrentDate(weekStart);
+  };
+
   return {
     currentWeek,
     currentWeekLabel,
@@ -46,5 +51,6 @@ export const useCalendarStore = defineStore("calendar", () => {
     goToToday,
     goToNextWeek,
     goToPreviousWeek,
+    goToDateWeek,
   };
 });

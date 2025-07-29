@@ -1,13 +1,13 @@
 import { createHttpClient } from "@/modules/core/services/http";
 
-import type { StationBooking } from "../stations.types";
+import type { Station, StationBooking } from "../stations.types";
 
 export const stationsApi = createHttpClient({
   baseURL: import.meta.env.VITE_BOOKING_API_BASE_URL,
   timeout: 10000,
 });
 
-export const getStations = async (name: string): Promise<Station[]> => {
+export const getStations = async (name?: string): Promise<Station[]> => {
   const response = await stationsApi.get<Station[]>("/stations", {
     params: { name },
   });

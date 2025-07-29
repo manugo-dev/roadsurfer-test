@@ -1,9 +1,10 @@
 <script lang="ts" setup>
-import { ref } from "vue";
+import { ref, watch } from "vue";
 
 import CalendarWeek from "./CalendarWeek.vue";
 import type { CalendarEvent } from "@/modules/calendar/calendar.types";
 import { useCalendarStore } from "@/modules/calendar/store/calendar.store";
+import { parseDate } from "@/modules/shared/utils/date";
 
 export type CalendarDisplayType = "week";
 
@@ -21,19 +22,31 @@ const emit = defineEmits<{
 }>();
 
 const calendarStore = useCalendarStore();
+
+watch(
+  () => props.events,
+  (events) => {
+    if (events.length > 0) {
+      const firstEventDate = parseDate(events[0].startDate);
+      console.log("looking for first event date", events, firstEventDate, events[0].startDate);
+      calendarStore.goToDateWeek(firstEventDate);
+    }
+  },
+  { immediate: true, deep: true },
+);
 </script>
 
 <template>
   <div class="flex h-full flex-col gap-4">
     <div class="flex items-center justify-center">
-      <div class="flex items-center space-x-4">
+      <div class="flex items-center">
         <button
           @click="calendarStore.goToToday"
-          class="focus:ring-primary hover:bg-primary hover:border-primary cursor-pointer rounded-md border-2 border-zinc-300 bg-white px-4 py-2 text-sm font-medium text-zinc-700 hover:text-white focus:ring-2 focus:outline-none">
+          class="focus:ring-primary hover:bg-primary hover:border-primary mr-4 cursor-pointer rounded-md border-2 border-zinc-300 bg-white px-4 py-2 text-sm font-medium text-zinc-700 hover:text-white focus:ring-2 focus:outline-none">
           Today
         </button>
 
-        <div class="flex items-center space-x-1">
+        <div class="flex items-center">
           <button
             @click="calendarStore.goToPreviousWeek"
             class="focus:ring-primary hover:bg-primary text-zinc-40 cursor-pointer rounded p-2 hover:text-white focus:ring-2 focus:outline-none">
@@ -52,12 +65,10 @@ const calendarStore = useCalendarStore();
         </div>
       </div>
     </div>
-
     <CalendarWeek
       v-if="currentDisplay === 'week'"
       :events="props.events"
       @event-moved="emit('event-moved', $event, $event.startDate, $event.endDate)"
-      @event-click="emit('event-click', $event)"
-      class="flex-1 overflow-auto" />
+      @event-click="emit('event-click', $event)" />
   </div>
 </template>

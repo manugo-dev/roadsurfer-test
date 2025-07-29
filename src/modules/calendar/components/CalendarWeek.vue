@@ -19,7 +19,7 @@ const calendarStore = useCalendarStore();
 </script>
 
 <template>
-  <div class="grid flex-1 grid-cols-1 rounded-lg border-4 border-zinc-200 sm:grid-cols-7">
+  <div class="grid flex-1 grid-cols-1 rounded-lg border-4 border-zinc-200 sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-7">
     <CalendarDay
       v-for="day in calendarStore.currentWeek"
       :key="day.getUTCDate()"

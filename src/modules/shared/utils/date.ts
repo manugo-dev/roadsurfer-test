@@ -1,5 +1,6 @@
 import dayjs from "dayjs";
 import isLeapYear from "dayjs/plugin/isLeapYear";
+import isoWeek from "dayjs/plugin/isoWeek";
 import isSameOrAfter from "dayjs/plugin/isSameOrAfter";
 import isSameOrBefore from "dayjs/plugin/isSameOrBefore";
 import timezone from "dayjs/plugin/timezone";
@@ -14,6 +15,8 @@ dayjs.extend(isSameOrAfter);
 dayjs.extend(isSameOrBefore);
 dayjs.extend(isLeapYear);
 dayjs.extend(weekOfYear);
+dayjs.extend(isoWeek);
+dayjs.tz.setDefault("UTC");
 
 export type DateValue = string | number | Date;
 export type DateUnit = "year" | "month" | "week" | "day" | "hour" | "minute" | "second";
@@ -49,8 +52,8 @@ export const isSameYear = (a: DateValue, b: DateValue): boolean => isSame(a, b, 
 
 export const startOfDay = (date: DateValue): Date => dayjs(date).startOf("day").toDate();
 export const endOfDay = (date: DateValue): Date => dayjs(date).endOf("day").toDate();
-export const startOfWeek = (date: DateValue): Date => dayjs(date).startOf("week").toDate();
-export const endOfWeek = (date: DateValue): Date => dayjs(date).endOf("week").toDate();
+export const startOfWeek = (date: DateValue): Date => dayjs(date).startOf("isoWeek").toDate();
+export const endOfWeek = (date: DateValue): Date => dayjs(date).endOf("isoWeek").toDate();
 export const startOfMonth = (date: DateValue): Date => dayjs(date).startOf("month").toDate();
 export const endOfMonth = (date: DateValue): Date => dayjs(date).endOf("month").toDate();
 export const startOfYear = (date: DateValue): Date => dayjs(date).startOf("year").toDate();
@@ -82,8 +85,7 @@ export const isCurrentMonth = (date: DateValue): boolean => getMonth(date) === g
 export const getWeekDays = (date: DateValue, startOfWeek = 1): Date[] => {
   const currentWeekday = getDayOfWeek(date);
   const diff = (currentWeekday - startOfWeek + 7) % 7;
-  const start = subtractDays(date, diff, "day");
-  console.log(date, currentWeekday, startOfWeek, diff, start);
+  const start = subtractDays(date, diff);
   return Array.from({ length: 7 }, (_, i) => addDays(start, i));
 };
 
