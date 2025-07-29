@@ -1,45 +1,120 @@
-# roadsurfer-test
+# 🚐 Roadsurfer Calendar Dashboard
 
-This template should help get you started developing with Vue 3 in Vite.
+[![CI/CD](https://github.com/manugo-dev/roadsurfer-test/actions/workflows/main.yml/badge.svg)](https://github.com/USERNAME/REPO/actions)
+[![GitHub Pages](https://img.shields.io/badge/deploy-GitHub%20Pages-blue)](https://roadsurfer.manugo.dev)
 
-## Recommended IDE Setup
+**Roadsurfer Calendar Dashboard** is a Vue 3 + Vite web application that displays all bookings (pickups and returns) for a given station in a weekly calendar view.  
+It is designed to help station staff efficiently manage van logistics and gain clear visibility over scheduled bookings.
 
-[VSCode](https://code.visualstudio.com/) + [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar) (and disable Vetur).
+---
 
-## Type Support for `.vue` Imports in TS
+## 🌍 Live Demo
 
-TypeScript cannot handle type information for `.vue` imports by default, so we replace the `tsc` CLI with `vue-tsc` for type checking. In editors, we need [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar) to make the TypeScript language service aware of `.vue` types.
+Access the deployed app here:  
+👉 **[https://roadsurfer.manugo.dev](https://roadsurfer.manugo.dev)**
 
-## Customize configuration
+---
 
-See [Vite Configuration Reference](https://vite.dev/config/).
+## ✨ Features
 
-## Project Setup
+- **Reusable Autocomplete**: Select a station using a smart input with remote search.
+- **Responsive Calendar View**: Weekly view adapting to mobile and desktop.
+- **Booking Details View**: Click a booking to view all related information.
+- **State Management with Pinia**: Manage selected station and calendar pagination.
+- **TanStack Query**: Data fetching, caching, and API communication.
+- **Unit Testing with Vitest**: Fast and modern unit test setup.
+- **CI/CD with GitHub Actions**: Automatic linting, testing, building, and deploying.
+- **GitHub Pages Deployment**: Hosted at `roadsurfer.manugo.dev`.
 
-```sh
+---
+
+## 🛠️ Tech Stack
+
+- [Vue 3](https://vuejs.org/)
+- [Vite](https://vitejs.dev/)
+- [TypeScript](https://www.typescriptlang.org/)
+- [Pinia](https://pinia.vuejs.org/)
+- [TanStack Query](https://tanstack.com/query/latest/docs/framework/vue/overview)
+- [Vitest](https://vitest.dev/)
+- [ESLint](https://eslint.org/) + [Prettier](https://prettier.io/) + [Stylelint](https://stylelint.io/)
+- [GitHub Actions](https://github.com/features/actions)
+- [GitHub Pages](https://pages.github.com/)
+
+---
+
+## 📁 Project Structure
+
+```
+src/
+├── assets/                # Static assets (images, styles)
+├── modules/           # App modules folder
+│   ├── core/                  # App-level config, constants, services, views
+│   ├── calendar/           # Calendar module related types and logic
+│   ├── dashboard/        # Dashboard module (integration of stations and calendar)
+│   ├── stations/            # Stations module (services, custom input)
+│   └── shared/              # Reusable components and utilities across app
+├── test/                # Global test setup
+└── main.ts              # App entry point
+```
+
+---
+
+## 📦 Getting Started
+
+### 1. Clone the project
+
+```bash
+git clone https://github.com/manugo-dev/roadsurfer-test.git
+cd roadsurfer-test
+```
+
+### 2. Install dependencies
+
+```bash
 npm install
 ```
 
-### Compile and Hot-Reload for Development
+### 3. Run in development mode
 
-```sh
+```bash
 npm run dev
 ```
 
-### Type-Check, Compile and Minify for Production
+### 4. Build for production
 
-```sh
+```bash
 npm run build
 ```
 
-### Run Unit Tests with [Vitest](https://vitest.dev/)
+### 5. Preview production build locally
 
-```sh
-npm run test:unit
+```bash
+npm run preview
 ```
 
-### Lint with [ESLint](https://eslint.org/)
+### 6. Run tests
 
-```sh
-npm run lint
+```bash
+npm run test
 ```
+
+---
+
+## ⚙️ CI/CD Workflow
+
+- Lint, unit tests, and production build are automatically triggered on every push or pull request to `main`.
+- A successful build uploads the `dist` folder as a GitHub Pages artifact.
+- Then it is deployed using `actions/deploy-pages`.
+
+---
+
+## 👤 Author
+
+**Manuel Gómez**  
+🟢 [roadsurfer.manugo.dev](https://roadsurfer.manugo.dev)
+
+---
+
+## 📄 License
+
+This project is licensed under the MIT License.

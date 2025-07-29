@@ -1,4 +1,4 @@
-import { vi } from "vitest"
+import { vi } from "vitest";
 
 // Mock IntersectionObserver for components that might use it
 global.IntersectionObserver = vi.fn().mockImplementation(() => ({
@@ -9,14 +9,14 @@ global.IntersectionObserver = vi.fn().mockImplementation(() => ({
   rootMargin: "",
   thresholds: [],
   takeRecords: vi.fn().mockReturnValue([]),
-}))
+}));
 
 // Mock ResizeObserver for components that might use it
 global.ResizeObserver = vi.fn().mockImplementation(() => ({
   observe: vi.fn(),
   unobserve: vi.fn(),
   disconnect: vi.fn(),
-}))
+}));
 
 // Mock matchMedia for responsive components
 Object.defineProperty(window, "matchMedia", {
@@ -31,10 +31,10 @@ Object.defineProperty(window, "matchMedia", {
     removeEventListener: vi.fn(),
     dispatchEvent: vi.fn(),
   })),
-})
+});
 
 // Mock scrollTo for components that use scrolling
-global.scrollTo = vi.fn()
+global.scrollTo = vi.fn();
 
 // Mock fetch if not using a specific HTTP client everywhere
-global.fetch = vi.fn()
+global.fetch = vi.fn();

@@ -1,4 +1,4 @@
-import axios, { type CreateAxiosDefaults } from "axios"
+import axios, { type CreateAxiosDefaults } from "axios";
 
 export const createHttpClient = (config: CreateAxiosDefaults) => {
   const instance = axios.create({
@@ -6,9 +6,9 @@ export const createHttpClient = (config: CreateAxiosDefaults) => {
       "Content-Type": "application/json",
     },
     ...config,
-  })
+  });
 
   // Add any interceptors or additional configuration here if needed
 
-  return instance
-}
+  return instance;
+};

@@ -1,8 +1,8 @@
-import { createRouter, createWebHistory } from "vue-router"
+import { createRouter, createWebHistory } from "vue-router";
 
-import { publicRoutes } from "./public.routes"
+import { publicRoutes } from "./public.routes";
 
-import { APP_ROUTES } from "../constants/routes"
+import { APP_ROUTES } from "../constants/routes";
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -14,6 +14,6 @@ const router = createRouter({
       component: () => import("@/modules/core/views/ErrorView.vue"),
     },
   ],
-})
+});
 
-export default router
+export default router;

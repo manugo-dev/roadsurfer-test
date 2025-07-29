@@ -1,8 +1,8 @@
 <script setup lang="ts">
-import { VueQueryDevtools } from "@tanstack/vue-query-devtools"
-import { RouterView } from "vue-router"
+import { VueQueryDevtools } from "@tanstack/vue-query-devtools";
+import { RouterView } from "vue-router";
 
-import RootLayout from "@/modules/shared/layouts/RootLayout.vue"
+import RootLayout from "@/modules/shared/layouts/RootLayout.vue";
 </script>
 
 <template>
