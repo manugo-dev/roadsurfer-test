@@ -49,7 +49,7 @@ watch(
         <span v-if="props.title" class="text-lg font-semibold text-zinc-600">{{ props.title }}</span>
         <span v-if="props.description" class="text-sm font-semibold text-zinc-400">{{ props.description }}</span>
       </div>
-      <div class="flex w-full items-center justify-center lg:w-72">
+      <div class="flex w-full items-center justify-center lg:w-75">
         <button
           @click="calendarStore.goToPreviousWeek"
           class="focus:ring-primary hover:bg-primary text-zinc-40 cursor-pointer rounded p-2 hover:text-white focus:ring-2 focus:outline-none">

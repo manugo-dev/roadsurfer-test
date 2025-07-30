@@ -3,8 +3,6 @@ name: CI & Deploy to GitHub Pages
 on:
   push:
     branches: [main]
-  pull_request:
-    branches: [main]
   workflow_dispatch:
 
 permissions:
@@ -15,7 +13,7 @@ permissions:
 concurrency:
   group: "pages"
   cancel-in-progress: false
-  
+
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -38,15 +36,15 @@ jobs:
 
       - name: 🧪 Run unit tests and coverage
         run: npm run coverage
-          
+
       - name: 🏗️ Build
         run: npm run build
         env:
           VITE_STATIONS_API_BASE_URL: ${{ vars.VITE_STATIONS_API_BASE_URL }}
-      
+
       - name: 📄 Copy index.html to 404.html
         run: cp dist/index.html dist/404.html
-  
+
       - name: 📦 Upload dist as artifact
         uses: actions/upload-pages-artifact@v3
         with:
